@@ -1,0 +1,94 @@
+        h3, p{
+            color: #fff;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .alert-danger a {
+            color: #fff;
+            font-size: large;
+            text-decoration: underline;
+        }
+
+
+        .background-container {
+            background-image: url('../images/talent2.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            padding: 50px;
+            /* Add padding to the container if needed */
+            min-height: 100vh;
+            /* Ensure the container fills the viewport height */
+            position: relative;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            /* Adjust the transparency here */
+            /* Adjust the transparency by changing the last value */
+            z-index: -1;
+        }
+
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            /* Increase the width of the form */
+            max-width: 500px;
+            /* Set a maximum width */
+            margin: auto;
+            /* Center the form horizontally */
+            margin-top: 50px;
+            /* Add some top margin */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label,
+        .text-white {
+            color: rgba(255, 255, 255, 0.8);
+            /* Adjust the transparency by changing the last value */
+        }
+
+        input[type="email"] {
+            width: 100%;
+            /* Make the input wider */
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Adjust the transparency by changing the last value */
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            /* Adjust the transparency by changing the last value */
+            color: white;
+            /* Adjust the text color */
+        }
+
+        .btn-primary {
+            background-color: rgba(0, 123, 255, 0.5);
+            /* Adjust the transparency by changing the last value */
+            border-color: rgba(0, 123, 255, 0.5);
+            /* Adjust the transparency by changing the last value */
+            color: white;
+            /* Adjust the text color */
+            width: 100%;
+            /* Make the button full-width */
+        }
+
+        @media (max-width: 767.98px) {
+            .form-container {
+                width: 100%;
+                /* Adjust the width as needed */
+                margin: auto;
+                /* Center the form */
+            }
+        }
