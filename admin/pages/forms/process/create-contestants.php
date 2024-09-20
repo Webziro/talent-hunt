@@ -16,28 +16,42 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $payment = $_POST['payment'];
     // Hash the password
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $talent = $_POST['talent'];
-    $verification_code = $_POST['verification_code'];
+    $talent_name = $_POST['talent']; // Retrieve talent name from form
 
     // Validate form fields
-    if(empty($name) || empty($email) || empty($password) || empty($talent)) {
-        $_SESSION['msg'] = " <div style='color: red'> Please fill in all fields </div>";
+    if(empty($name) || empty($email) || empty($password) || empty($talent_name)) {
+        $_SESSION['msg'] = "<div style='color: red'>Please fill in all fields</div>";
         header("location: ../create-contestants.php");
         exit();
     }
 
-    // Insert contestant into database
-    $insert_query = "INSERT INTO users (Uname, Uemail, form_payment, Upassword, Utalent, verification_code) VALUES (?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($insert_query);
-    $stmt->bind_param("ssssss", $name, $email, $payment, $password, $talent, $verification_code);
+    // Retrieve talent ID based on talent name
+    $talent_query = "SELECT id FROM categories WHERE name = ?";
+    $stmt_talent = $conn->prepare($talent_query);
+    $stmt_talent->bind_param("s", $talent_name);
+    $stmt_talent->execute();
+    $result_talent = $stmt_talent->get_result();
 
-    if($stmt->execute()) {
-        $_SESSION['msg'] = "<div style='color:green''>Contestant created successfully</div>";
-        header("location: ../create-contestants.php");
-        exit();
+    if($result_talent->num_rows > 0) {
+        $row_talent = $result_talent->fetch_assoc();
+        $talent_id = $row_talent['id'];
+
+        // Insert contestant into database
+        $insert_query = "INSERT INTO users (Uname, Uemail, form_payment, Upassword, Utalent, terms, verification_code) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($insert_query);
+        $stmt->bind_param("sssssss", $name, $email, $payment, $password, $talent_id, $_POST['terms'], $_POST['verification_code']);
+
+        if($stmt->execute()) {
+            $_SESSION['msg'] = "<div style='color:green'>Contestant created successfully</div>";
+            header("location: ../create-contestants.php");
+            exit();
+        } else {
+            $_SESSION['msg'] = "Error creating contestant: " . $conn->error;
+            header("location: ../create-contestants.php");
+            exit();
+        }
     } else {
-        // $_SESSION['msg'] = "Error creating contestant: " . $conn->error;
-        $_SESSION['msg'] = "<div syle='color:red'>Error creating contestant</div>";
+        $_SESSION['msg'] = "Error creating contestant: Talent not found";
         header("location: ../create-contestants.php");
         exit();
     }
@@ -45,5 +59,4 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     header("location: ../create-contestants.php");
     exit();
 }
-
 ?>

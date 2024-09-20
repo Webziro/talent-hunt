@@ -13,7 +13,7 @@
         <meta charset=utf-8>
         <title>Sign up</title>
         <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-        <meta name=description content="This is meta description.">
+        <meta name=description content="<?php echo $about;?>">
         <meta name=author content="Themefisher">
         <meta name=generator content="Hugo 0.92.0">
         <link rel=stylesheet href=../plugins/bootstrap/bootstrap.min.css>
@@ -26,12 +26,12 @@
         <link rel=stylesheet href=../plugins/cd-hero/cd-hero.css>
         <link rel=stylesheet href=../scss/style.css media=screen>
         <link id=style-switch href=../presets/preset3.css media=screen rel=stylesheet type=text/css>
-        <link rel="shortcut icon" href=../images/favicon.png type=image/x-icon>
-        <link rel=icon href=../images/favicon.png type=image/x-icon>
-        <meta property="og:title" content="Contact Us">
-        <meta property="og:description" content="This is meta description.">
+        <link rel="shortcut icon" href=.../images/gmally-logo.jpeg type=image/x-icon>
+        <link rel=icon href=../images/gmally-logo.jpeg type=image/x-icon>
+        <meta property="og:title" content="Sign Up">
+        <meta property="og:description" content="<?php echo $about;?>">
         <meta property="og:type" content="website">
-        <meta property="og:url" content="index.html">
+        <meta property="og:url" content="../index.php">
     </head>
 
     <body>
@@ -41,15 +41,15 @@
 
 
             <div id=banner-area>
-                <img src=../images/banner/banner1.jpg onerror="this.src='../images/landing/main-bg.jpg'" height="200px"
-                    width="1680px">
+                <img src=../images/banner/banner1.jpg onerror="this.src='../images/landing/main-bg.jpg'" width="1680px"
+                    height="500px">
                 <div class=parallax-overlay></div>
                 <div class=banner-title-content>
                     <div class=text-center>
                         <h2>Register </h2>
                         <nav aria-label=breadcrumb>
                             <ol class="breadcrumb justify-content-center">
-                                <li class=breadcrumb-item><a href=../index.html>Home</a></li>
+                                <li class=breadcrumb-item><a href=../index.php>Home</a></li>
                                 <li class="breadcrumb-item text-white" aria-current=page>Signup</li>
                             </ol>
                         </nav>
@@ -140,13 +140,28 @@
                                     </div>
 
 
-                                    <div class="col-8-md">
-                                        <div class=form-group>
+                                    <div class="col-4-md ml-1 col-12">
+                                        <div class="form-group">
                                             <label>Describe yourself</label>
                                             <textarea class=form-control name=Umessage id=message
-                                                placeholder="Just in less than 2 sentence" rows=3 required></textarea>
+                                                placeholder="in less than 15 words" rows=2 required></textarea>
+                                        </div>
+                                        <p id="wordCountFeedback"></p>
+
+                                    </div>
+
+
+                                    <div class="form-group ml-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id=" agreeTerms"
+                                                name="agree-terms" required>
+                                            <label class="form-check-label" for="agreeTerms">
+                                                By clicking submit, you agree to our <a href="tncs.php">Terms and
+                                                    Conditions</a>.
+                                            </label>
                                         </div>
                                     </div>
+
 
                                     <div class=text-right><br>
                                         <button class="btn btn-primary solid blank" name="submit" type=submit>Register
@@ -191,6 +206,49 @@
             </section>
         </div>
 
+
+        <!--Word count script-->
+
+        <script>
+        const textarea = document.getElementById('message');
+        const feedback = document.getElementById('wordCountFeedback');
+        const maxWords = 15; // Maximum word limit
+
+        // Function to count words in a given text
+        function countWords(text) {
+            return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+        }
+
+        // Function to handle input events on the textarea
+        function handleInput() {
+            const text = textarea.value;
+            const wordCount = countWords(text);
+
+            // Provide feedback on the word count
+            feedback.textContent = `Word count: ${wordCount}/${maxWords}`;
+
+            // Check if the maximum word limit has been reached
+            if (wordCount >= maxWords) {
+                textarea.readOnly = true; // Make the textarea read-only
+                feedback.style.color = 'red';
+                feedback.textContent += ' (Maximum word count reached)';
+            } else {
+                textarea.readOnly = false; // Keep textarea editable if under limit
+            }
+        }
+
+        // Function to handle click events on the textarea
+        function handleClick() {
+            // Re-enable textarea if it is read-only
+            if (textarea.readOnly) {
+                textarea.readOnly = false;
+            }
+        }
+
+        // Attach event listeners
+        textarea.addEventListener('input', handleInput);
+        textarea.addEventListener('click', handleClick);
+        </script>
 
 
         <script data-cfasync="false"

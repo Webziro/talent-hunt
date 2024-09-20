@@ -73,9 +73,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
     $dataToInsert=[];
     foreach($_POST as $key=>$value){
         if($key!=="email"){
-            if($value!==""){
+            if ($key !== "email" && is_array($value)) {
                 $selectedCat++;
-                $dataToInsert[]=['category'=>$key, 'contestant'=>$value];
+                $dataToInsert[]=['category'=>$key, 'contestant' => $value[0]];
             }
         }
     }
@@ -88,9 +88,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
     foreach($dataToInsert as $data){
         $cat=$data['category'];
         $user= $data['contestant'];
-        $insert_vote_sql = "INSERT INTO votes (email, ip_address, no_Of_Votes, categoryId, userId) VALUES (?, ?, 1, '$cat', '$user')";
+        //$insert_vote_sql = "INSERT INTO votes (email, ip_address, no_Of_Votes, categoryId, userId) VALUES (?, ?, 1, '$cat', '$user')";
 
-            // Attempt to prepare the SQL statement
+        $insert_vote_sql = "INSERT INTO votes (email, ip_address, no_Of_Votes, categoryId, userId) VALUES (?, ?, 1, ?, ?)";
+        $insert_vote_stmt = $conn->prepare($insert_vote_sql);
+        $insert_vote_stmt->bind_param("ssii", $email, $ip_address, $cat, $user);
+        
+        // Attempt to prepare the SQL statement
         $insert_vote_stmt = $conn->prepare($insert_vote_sql);
 
         // Check if preparation succeeded
@@ -155,6 +159,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
                     }
                 ?>
                 <!-- HTML form -->
+
+
+                //new form
                 <form action="#" method="POST" id="categoryForm">
                     <?php
                 // Display dropdown menu for each category
@@ -167,7 +174,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
 
                     // Display options for each category
                     foreach ($category['contestants'] as $contestant_name) {
-                        echo '<option value="' . $contestant_name['id'] . '">' . $contestant_name['name'] . '</option>';
+                        //echo '<option value="' . $contestant_name['id'] . '">' . $contestant_name['name'] . '</option>';
+
+                        echo '<option value="' . $contestant_name['id'] . '" data-contestant-id="' . $contestant_name['id'] . '">' . $contestant_name['name'] . '</option>';
                     }
                     echo '</select>';
                     echo '</div>';
@@ -180,6 +189,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
                     </div>
                     <button type="submit" class="btn btn-primary">Submit Vote</button>
                 </form>
+
             </div>
         </div>
 

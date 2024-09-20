@@ -8,12 +8,15 @@
             <html lang=en-us>
 
                 <head>
+                    <script src="https://platform.illow.io/banner.js?siteId=5a2ce985-7945-4c5c-baea-b1f5f04308d4">
+                    </script>
                     <meta charset=utf-8>
                     <title>
                         <?php echo $header ?>
                     </title>
                     <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-                    <meta name=description content="This is meta description">
+                    <meta name=description content="<?php echo $about;?>">
+
                     <meta name=author content="Themefisher">
                     <meta name=generator content="Hugo 0.92.0">
                     <link rel=stylesheet href=plugins/bootstrap/bootstrap.min.css>
@@ -30,10 +33,10 @@
                     <link rel="shortcut icon" href=images/gmally-logo.jpeg type=image/x-icon>
                     <link rel=icon href=images/gmally-logo.jpeg type=image/x-icon>
 
-                    <meta property="og:title" content="BizCraft - Responsive Html5 Template">
-                    <meta property="og:description" content="This is meta description">
+                    <meta property="og:title" content="<?php echo $about;?>">
+                    <meta property="og:description" content="<?php echo $about;?>">
                     <meta property="og:type" content="website">
-                    <meta property="og:url" content="index.html">
+                    <meta property="og:url" content="index.php">
                 </head>
 
                 <body>
@@ -89,24 +92,22 @@
 
                                     <!--Team Starts-->
                                     <?php
-                            include "includes/team.php";
-                        ?>
+                                        include "includes/team.php";
+                                    ?>
                                     <!--Team Starts-->
-
-
 
                                     <!--Action Starts-->
                                     <?php
-                            include "includes/action.php";
-                        ?>
+                                        include "includes/action.php";
+                                    ?>
                                     <!--Action Ends-->
 
 
 
                                     <!--Clients Starts-->
                                     <?php
-                            include "includes/clients.php";
-                        ?>
+                                        include "includes/clients.php";
+                                    ?>
                                     <!--Clients End-->
 
 
@@ -121,6 +122,12 @@
                                                         <div class="latest-post-content media-body">
                                                             <p><?php echo $about;?></p>
 
+                                                            <span class="float-none  d-block mt-1 mt-sm-0 ">
+                                                                Read Our <a href="tncs.php" target="_blank"
+                                                                    style="color: #F58634;">
+                                                                    Terms and Conditions
+                                                                </a>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -176,12 +183,14 @@
                                                         class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright
                                                         <? echo $client_name; ?>
                                                         &copy;
-                                                        2020 - <?php echo date("Y"); ?></span>
+                                                        2020 - <?php echo date("Y"); ?>
+                                                    </span>
                                                     <span
                                                         class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
                                                         Developed by <a href="https://wa.link/k5cji9" target="_blank"
                                                             style="color: #F58634;"> <?php echo $company_name;?>
-                                                        </a> </span>
+                                                        </a>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div id=back-to-top data-spy=affix data-offset-top=10
@@ -211,6 +220,7 @@
                             <script src=plugins/jquery.counterup.min.js></script>
                             <script src=plugins/waypoints.min.js></script>
                             <script src=js/script.min.js></script>
+
                             <script src="
                             https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js
                             "></script>

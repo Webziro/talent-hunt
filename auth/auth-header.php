@@ -29,7 +29,7 @@
                         </a>
                         <div class=dropdown-menu>
                             <a class=dropdown-item href=../auth/signup.php>Sign up</a>
-                            <a class=dropdown-item href=../auth/login.php>Login</a>
+                            <a class=dropdown-item href=../auth/signin.php>Login</a>
                         </div>
             </div>
             </li>

@@ -36,7 +36,7 @@
 ?>
 <div class="row">
     <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-danger card-img-holder text-white">
+        <div class="card bg-danger card-img-holder text-white">
 
             <a href="pages/forms/buyform.php">
                 <div class="card-body">
@@ -55,9 +55,10 @@
 
                         // Check if the count is greater than zero
                         if ($rowpurchase['form_count'] > 0) {
-                            echo "You have purchased your form";
+                            // echo "Congrats, You have purchased your form";
+                           echo "<div style='background-color: red; color: white; padding:20px;'> Congrats, You have purchased your form</div>";
                         } else {
-                            echo "No form purchased yet!";
+                            echo "No form purchased yet! Click to buy";
                         }
                     } else {
                         // Handle query execution error
@@ -84,7 +85,7 @@
 
 
 
-
+    <!--CHECK NUMBER OF CONTESTANTS VOTES -->
 
     <div class="col-md-4 stretch-card grid-margin">
         <div class="card bg-gradient-secondary card-img-holder text-white">

@@ -31,7 +31,7 @@
     
      // Execute the Paystack API request
     $result = curl_exec($ch);
-    
+    // print_r($result); die;
     header('location: '.json_decode($result, true)['data']['authorization_url']);
     
 } else {

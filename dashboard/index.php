@@ -192,7 +192,7 @@
                 <!-- partial:partials/_footer.html -->
                 <footer class="footer">
                     <div class="container-fluid clearfix">
-                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright BWEC
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright GMA
                             &copy;
                             2023 - <?php echo date("Y"); ?></span>
                         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Developed by <a

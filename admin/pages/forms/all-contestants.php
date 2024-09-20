@@ -1,19 +1,7 @@
 <?php
-session_start();
-include "../../includes/properties.php";
-include "../../includes/conn.php";
-
-if(isset($_SESSION['userid'])){
-    $adminid = $_SESSION['userid'];
-    $query = mysqli_query($conn, "SELECT * FROM users WHERE id = '$adminid' "); 
-    $result = mysqli_fetch_assoc($query);
-} else {
-    header("location: index.php ");
-}
-
-// Fetch users data
-$queryusers = mysqli_query($conn, "SELECT * FROM users");
-
+    session_start();
+    include "../../includes/properties.php";
+    include "../../includes/admin-session.php";
 ?>
 
 <!DOCTYPE html>
@@ -41,18 +29,22 @@ $queryusers = mysqli_query($conn, "SELECT * FROM users");
                     <div class="row flex-grow">
                         <div class="col-lg-10 mx-auto">
                             <div class="auth-form-light text-left p-3 p-md-5">
-                                <div class="brand-logo">
-                                    <img src="../../assets/images/bwec-banner.png" height="160px" class="img-fluid"
-                                        alt="Brand Logo">
-                                </div>
+                                <!-- <div class="brand-logo">
+                                    <img src="../../assets/images/gmally-logo.png" height="100px" width="10px"
+                                        class="img-fluid" alt="Brand Logo">
+                                </div> -->
                                 <?php
-                            if(isset($_SESSION['msg'])) {
-                                echo $_SESSION['msg'];
-                                unset($_SESSION['msg']);
-                            } 
-                            ?>
-                                <?php                                      
-                            if(mysqli_num_rows($queryusers) > 0) { ?>
+                                    if(isset($_SESSION['msg'])) {
+                                        echo $_SESSION['msg'];
+                                        unset($_SESSION['msg']);
+                                    } 
+                                ?>
+                                <?php  
+                                    // Fetch users data
+                                    $queryusers = mysqli_query($conn, "SELECT * FROM users");
+                                    // $queryusers = mysqli_query($conn, "SELECT * FROM users INNER JOIN talents ON users.id = talents.id");                                    
+                                    if(mysqli_num_rows($queryusers) > 0) { 
+                                ?>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -67,17 +59,19 @@ $queryusers = mysqli_query($conn, "SELECT * FROM users");
                                             </tr>
                                         </thead>
                                         <tbody>
+
+
                                             <?php
-                                        $count = 1;
-                                        while($rowResults = mysqli_fetch_assoc($queryusers)) {
-                                        ?>
+                                                $count = 1;
+                                                while($rowResults = mysqli_fetch_assoc($queryusers)) {
+                                            ?>
                                             <tr>
-                                                <td><?php echo $count; ?></td>
-                                                <td><?php echo $rowResults['Uname']; ?></td>
-                                                <td><?php echo $rowResults['Uemail']; ?></td>
-                                                <td><?php echo $rowResults['form_payment']; ?></td>
-                                                <td><?php echo $rowResults['Uphone']; ?></td>
-                                                <td><?php echo $rowResults['Utalent']; ?></td>
+                                                <td><?php echo htmlspecialchars($count); ?></td>
+                                                <td><?php echo htmlspecialchars( $rowResults['Uname']); ?></td>
+                                                <td><?php echo htmlspecialchars( $rowResults['Uemail']); ?></td>
+                                                <td><?php echo htmlspecialchars( $rowResults['form_payment']); ?></td>
+                                                <td><?php echo htmlspecialchars( $rowResults['Uphone']); ?></td>
+                                                <td><?php echo htmlspecialchars( $rowResults['Utalent']); ?></td>
                                                 <td>
                                                     <!-- Edit button -->
                                                     <a href="process/edit.php?id=<?php echo $rowResults['id']; ?>"
@@ -96,14 +90,14 @@ $queryusers = mysqli_query($conn, "SELECT * FROM users");
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="exampleModalLabel">Confirm
-                                                                Deletion</h5>
+                                                                Delete</h5>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Are you sure you want to delete the contestant
+                                                            Are you sure you want to delete this contestant?
                                                             "<?php echo $rowResults['Uname']; ?>"?
                                                         </div>
                                                         <div class="modal-footer">
@@ -157,8 +151,6 @@ $queryusers = mysqli_query($conn, "SELECT * FROM users");
         <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
         <!-- endinject -->
         <!-- inject:js -->
-        <script src="https://js.paystack.co/v1/inline.js"></script>
-        <script src="process/buyformscript.js"></script>
         <script src="../../assets/js/off-canvas.js"></script>
         <script src="../../assets/js/hoverable-collapse.js"></script>
         <script src="../../assets/js/misc.js"></script>

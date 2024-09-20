@@ -45,12 +45,12 @@
             <div class="container-fluid page-body-wrapper full-page-wrapper">
                 <div class="content-wrapper d-flex align-items-center auth">
                     <div class="row flex-grow">
-                        <div class="col-lg-6 mx-auto">
+                        <div class="col-lg-10 mx-auto">
                             <div class="auth-form-light text-left p-5">
-                                <div class="brand-logo">
+                                <!-- <div class="brand-logo">
                                     <img src="../../assets/images/bwec-banner.png" style="padding-right: 50pc;"
                                         height="160px">
-                                </div>
+                                </div> -->
 
                                 <?php
                                         if(isset($_SESSION['msg'])){
@@ -62,7 +62,8 @@
 
 
                                 <?php                                      
-                                        $queryVotes = mysqli_query($conn, "SELECT * FROM votes ");
+                                        // $queryVotes = mysqli_query($conn, "SELECT * FROM votes ");
+                                        $queryVotes = mysqli_query($conn, "SELECT * FROM votes INNER JOIN users ON votes.userId = users.id ");
 
                                         if(mysqli_num_rows($queryVotes) > 0) { 
                                 ?>
@@ -73,8 +74,9 @@
                                                 <th>SN</th>
                                                 <th>Email</th>
                                                 <th>Vote Type</th>
-                                                <th>Number of Votes</th>
-                                                <th>Payment Reference</th>
+                                                <th>Votes</th>
+                                                <th>Voter's Name</th>
+                                                <th>Payment Ref</th>
                                                 <th>Date</th>
                                             </tr>
                                         </thead>
@@ -88,6 +90,7 @@
                                                 <td><?php echo $rowResults['email']; ?></td>
                                                 <td><?php echo $rowResults['v_type']; ?></td>
                                                 <td><?php echo $rowResults['no_Of_Votes']; ?></td>
+                                                <td><?php echo $rowResults['Uname']; ?></td>
                                                 <td><?php echo $rowResults['payment_ref']; ?></td>
                                                 <td><?php echo $rowResults['date']; ?></td>
                                             </tr>

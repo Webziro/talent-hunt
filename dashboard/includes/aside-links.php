@@ -25,7 +25,7 @@
 
      <li class="nav-item">
          <a class="nav-link" href="index.php">
-             <span class="menu-title" style="color: #000f;">BWEC User Dashboard</span>
+             <span class="menu-title" style="color: #000f;">GMA User Dashboard</span>
 
          </a>
      </li>

@@ -10,7 +10,8 @@ if (!isset($_GET['reference'])) {
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://api.paystack.co/transaction/verify/" . $_GET['reference'],
+    // CURLOPT_URL => "https://api.paystack.co/transaction/verify/" . $_GET['reference'],
+    CURLOPT_URL => "https://sandbox-api-d.squadco.com/transaction/verify" . $_GET['reference'],
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -18,7 +19,8 @@ curl_setopt_array($curl, array(
     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
     CURLOPT_CUSTOMREQUEST => "GET",
     CURLOPT_HTTPHEADER => array(
-        "Authorization: Bearer sk_test_a4cdbb8de5b8b01524c387489e4501edd9d60fb6",
+        // "Authorization: Bearer sk_test_a4cdbb8de5b8b01524c387489e4501edd9d60fb6",
+        "Authorization: Bearer sandbox_sk_94f2b798466408ef4d19e848ee1a4d1a3e93f104046f",
         "Cache-Control: no-cache",
     ),
 ));

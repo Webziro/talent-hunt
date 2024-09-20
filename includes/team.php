@@ -7,7 +7,7 @@ include "includes/conn.php";
         <div class="row">
             <div class="col-md-12 heading">
                 <span class="title-icon float-left"><i class="fa fa-weixin"></i></span>
-                <h2 style="color:#F58634;" class="title">TEAM MEMBERS<span class="title-desc">
+                <h2 style="color:#F58634;" class="title">GM ALLY TEAM MEMBERS<span class="title-desc">
                         A dedicated team running the GM ALLY Vision
                     </span>
                 </h2>
@@ -17,10 +17,10 @@ include "includes/conn.php";
 
         <div class="row">
             <?php
-    $queryTeam = mysqli_query($conn, "SELECT * FROM team_members");
+                $queryTeam = mysqli_query($conn, "SELECT * FROM team_members");
 
-    while ($rowResult = mysqli_fetch_assoc($queryTeam)) {
-        ?>
+                while ($rowResult = mysqli_fetch_assoc($queryTeam)) {
+            ?>
             <div class="col-md-3 col-sm-6">
                 <div class="team wow fadeInUp" data-wow-delay=".6s">
                     <div class="img-square">

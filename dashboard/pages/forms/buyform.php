@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="mt-3">
                                         <button type="submit" id="submitButton"
-                                            class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">
+                                            class="btn btn-block btn-gradient-secondary btn-lg font-weight-medium auth-form-btn">
                                             BUY FORM
                                         </button>
                                     </div>
@@ -99,6 +99,7 @@
         <!-- End plugin js for this page -->
         <!-- inject:js -->
         <script src="https://js.paystack.co/v1/inline.js"></script>
+        <!-- <script src="https://checkout.squadco.com/widget/squad.min.js"></script> -->
 
         <script src="process/buyformscript.js"></script>
         <script src="../../assets/js/off-canvas.js"></script>

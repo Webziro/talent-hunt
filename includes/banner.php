@@ -11,12 +11,6 @@
       </p>
 
 
-
-
-      <!-- <a href="../dashboard/pages/forms/buyform.php" class="btn btn-primary rounded-pill solid cd-btn">Purchase Form</a> -->
-      <!-- <a href="votes/index.php" class="btn btn-primary white cd-btn">Vote A Contestant</a> -->
-
-
       <a href="auth/signup.php" class="btn btn-primary rounded-pill solid cd-btn"
           style="background-color: #f58634;  border: none;">Purchase Form
       </a>

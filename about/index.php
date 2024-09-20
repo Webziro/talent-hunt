@@ -15,7 +15,7 @@
                         <?php echo $header ?>
                     </title>
                     <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-                    <meta name=description content="This is meta description">
+                    <meta name=description content="<?php echo $about;?>">
                     <meta name=author content="Themefisher">
                     <meta name=generator content="Hugo 0.92.0">
                     <link rel=stylesheet href=../plugins/bootstrap/bootstrap.min.css>
@@ -32,8 +32,8 @@
                     <link rel="shortcut icon" href=../images/gmally-logo.jpeg type=image/x-icon>
                     <link rel=icon href=../images/gmally-logo.jpeg type=image/x-icon>
 
-                    <meta property="og:title" content="BizCraft - Responsive Html5 Template">
-                    <meta property="og:description" content="This is meta description">
+                    <meta property="og:title" content="<?php echo $about;?>">
+                    <meta property="og:description" content="<?php echo $about;?>">
                     <meta property="og:type" content="website">
                     <meta property="og:url" content="index.html">
                 </head>
@@ -78,7 +78,7 @@
                                                 </a>
                                                 <div class=dropdown-menu>
                                                     <a class=dropdown-item href=../auth/signup.php>Sign Up</a>
-                                                    <a class=dropdown-item href=..//auth/signin.php>Login</a>
+                                                    <a class=dropdown-item href=../auth/signin.php>Login</a>
                                                 </div>
                                             </li>
                                             <li class=nav-item>
@@ -93,7 +93,8 @@
 
 
                         <div id=banner-area>
-                            <img src=../images/banner/about.jpeg onerror="this.src='../images/banner/about.jpeg'" alt>
+                            <img src=../images/banner/about.jpeg onerror="this.src='../images/banner/ABOUT.jpeg'"
+                                width="1680px" height="500px" alt>
                             <div class=parallax-overlay></div>
                             <div class=banner-title-content>
                                 <div class=text-center>

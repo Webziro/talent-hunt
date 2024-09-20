@@ -83,7 +83,9 @@ include "../includes/contact-details.php";
                             echo '<select class="custom-select" name="' . $category_id . '" id="category_contestants_' . $category_id . '">';
                             echo '<option value="">--Select an option--</option>'; 
                             foreach ($category_data['contestants'] as $contestant_name) {
-                                echo '<option value= "' . $contestant_id . '">' . $contestant_name . '</option>';
+                                // echo '<option value= "' . $contestant_id . '">' . $contestant_name . '</option>';
+                                echo '<option value="' . $contestant_id . '" data-contestant-id="' . $contestant_id . '">' . $contestant_name . '</option>';
+
                             }
                             echo '</select>';
                             echo '</div>';
@@ -91,6 +93,10 @@ include "../includes/contact-details.php";
                     } else {
                         echo 'No categories or contestants found.';
                     }
+
+
+
+// Display dropdown menu for each category
                     ?>
                                 <!-- Hidden input fields to store chosen category and contestant -->
                                 <input type="hidden" name="chosen_contestant" id="chosen_contestant">
@@ -114,6 +120,7 @@ include "../includes/contact-details.php";
                                         class="btn btn-block btn-secondary btn-lg font-weight-medium auth-form-btn">
                                         Proceed to Payment
                                     </button>
+
                                 </div>
                             </form>
 
@@ -124,38 +131,55 @@ include "../includes/contact-details.php";
                             </script>
 
                             <script>
+                            // Keep track of the previously selected element
+                            let previouslySelectedElement = null;
+
                             // Show submit button when a category is selected
                             $('select').change(function() {
-                                $('#submitButtonContainer').show();
+                                // Enable all select elements when a new selection is made
+                                $('select').prop('disabled', false);
+
+                                // Check if the current select element has a value
                                 if ($(this).val() !== "") {
-                                    $('select').prop('disabled', true);
+                                    // Disable all other select elements
+                                    $('select').not(this).prop('disabled', true);
+
+                                    // Update the previously selected element
+                                    previouslySelectedElement = this;
                                 }
+
+                                // Show the submit button container
+                                $('#submitButtonContainer').show();
                             });
 
-                            $('#email-address').keyup(function() {
-                                var contestant = $('select option:selected').val();
-                                $('#chosen_contestant').val(contestant);
-                            });
+                            // Update the hidden input field when the email address is typed
+                            // $('#email-address').keyup(function() {
+                            //     var contestant = $('select option:selected').data('contestant-id');
+                            //     $('#chosen_contestant').val(contestant);
+                            // });
 
-                            // Function to confirm selection and submit form
+                            var contestant = $('select option:selected').data('contestant-id');
+                            console.log(contestant);
+                            $('#chosen_contestant').val(contestant);
+
+                            // Function to confirm selection and submit the form
                             $('#submitButton').click(function() {
+                                // Confirm the action with the user
                                 var confirmation = confirm('Are you sure you want to proceed to payment?');
                                 if (confirmation) {
-                                    // Get the chosen category and contestant
+                                    // Get the chosen contestant from the currently selected option
                                     var contestant = $('select option:selected').val();
 
-                                    // Set the values of the hidden input fields
+                                    // Update the hidden input field with the chosen contestant value
                                     $('#chosen_contestant').val(contestant);
 
-                                    // Count the number of selected categories
-
-                                    // Submit the form
+                                    // Submit the form after a short delay
                                     setTimeout(() => {
                                         $('#categoryForm').submit();
-                                    }, 1000)
-
+                                    }, 1000);
                                 }
                             });
+
 
                             // const currentURL = new URL(window.location.href);
 

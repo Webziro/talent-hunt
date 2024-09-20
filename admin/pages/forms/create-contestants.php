@@ -1,15 +1,7 @@
 <?php
     session_start();
     include "../../includes/properties.php";
-    include "../../../includes/conn.php";
-    
-    if(isset($_SESSION['userid'])){
-        $adminid = $_SESSION['userid'];
-        $query = mysqli_query($conn, "SELECT * FROM users WHERE id = '$adminid' "); 
-        $result = mysqli_fetch_assoc($query);
-    } else {
-        header("location: index.php ");
-    }
+    include "../../includes/admin-session.php";
 ?>
 
 <!DOCTYPE html>
@@ -94,22 +86,33 @@
                                         <select class="form-control form-control-lg" id="talent" name="talent">
                                             <option value="">Talent Category</option>
                                             <?php
-                                        // Fetch talent options from the database
-                                        $talent_query = mysqli_query($conn, "SELECT * FROM categories");
-                                        while($talent_row = mysqli_fetch_assoc($talent_query)) {
-                                            echo '<option value="' . $talent_row['name'] . '">' . $talent_row['name'] . '</option>';
-                                        }
-                                        ?>
+                                                // Fetch talent options from the database
+                                                $talent_query = mysqli_query($conn, "SELECT * FROM categories");
+                                                while($talent_row = mysqli_fetch_assoc($talent_query)) {
+                                                    echo '<option value="' . $talent_row['name'] . '">' . $talent_row['name'] . '</option>';
+                                                }
+                                            ?>
                                             <!-- Add more talent options as needed -->
                                         </select>
                                     </div>
 
 
 
+                                    <div class="form-group ml-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id=" agreeTerms"
+                                                name="terms" required>
+                                            <label class="form-check-label" for="agreeTerms">
+                                                By clicking submit, you agree to our <a href="tncs.php">Terms and
+                                                    Conditions</a>
+                                            </label>
+                                        </div>
+                                    </div>
+
                                     <?php
-                                // Generate random verification code
-                                $verification_code = 'GMA-' . mt_rand(100, 999) . chr(mt_rand(65, 90)) . chr(mt_rand(65, 90));
-                                ?>
+                                        // Generate random verification code
+                                        $verification_code = 'GMA-' . mt_rand(100, 999) . chr(mt_rand(65, 90)) . chr(mt_rand(65, 90));
+                                    ?>
 
                                     <input type="hidden" name="verification_code"
                                         value="<?php echo $verification_code; ?>">

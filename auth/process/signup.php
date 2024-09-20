@@ -41,9 +41,10 @@ if(isset($_POST['submit'])){
     $confirmPassword = mysqli_real_escape_string($conn, $_POST['UconfrimPassword']);
     $talent = mysqli_real_escape_string($conn, $_POST['Utalent']);
     $message = mysqli_real_escape_string($conn, $_POST['Umessage']);
+    $agreeTerms = mysqli_real_escape_string($conn, $_POST['agree-terms']);
     // print_r($_POST); die();
-    if(empty($name) or empty($email) or empty($password) or empty($confirmPassword) or empty($talent) or empty($message)){
-        $_SESSION['msg'] = "<div class='alert alert-danger'>Please fill all fields!</div>";
+    if(empty($name) or empty($email) or empty($password) or empty($confirmPassword) or empty($talent) or empty($message) or empty($agreeTerms)){
+        $_SESSION['msg'] = "<div class='alert alert-danger'>Please fill all fields and tick the box!</div>";
         header("location:../signup.php");
     }else{
         if(password_strength_check($password) == FALSE){
@@ -61,14 +62,14 @@ if(isset($_POST['submit'])){
                     $verificationCode = generateVerificationCode(); // Generate verification code
                     $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Hash the password
 
-                    $query = mysqli_query($conn, "INSERT INTO users (Uname, Uemail, Upassword, Utalent, Umessage, verification_code) 
-                    VALUES ('$name', '$email', '$hashedPassword',  '$talent', '$message', '$verificationCode')");
+                    $query = mysqli_query($conn, "INSERT INTO users (Uname, Uemail, Upassword, Utalent, Umessage, terms, verification_code) 
+                    VALUES ('$name', '$email', '$hashedPassword',  '$talent', '$message', '$agreeTerms', '$verificationCode')");
                     //or die(mysqli_error($conn));
                     if($query){
                         $_SESSION['userid'] = mysqli_insert_id($conn);
                         header("location:../../dashboard/index.php");
                     }else{
-                        $_SESSION['msg'] = "<div class='alert alert-danger'>You details are not unique!</div>";
+                        $_SESSION['msg'] = "<div class='alert alert-danger'>Your details are not unique!</div>";
                         header("location:../signup.php");
                     }
                 }
