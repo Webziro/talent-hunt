@@ -3,9 +3,7 @@
 session_start();
 include "../../includes/conn.php";
 $myServer="http://localhost/talent-hunt";
-if(isset($_POST['email']) && $_POST['noOfVotes']>1 && $_POST['email']!="") {
-    //print_r($_POST); die();
-    
+if(isset($_POST['email']) && $_POST['noOfVotes']>1 && $_POST['email']!="") {    
     $selectedCat=0;
     $dataToInsert=[];
     foreach($_POST as $key=>$value){
@@ -13,7 +11,6 @@ if(isset($_POST['email']) && $_POST['noOfVotes']>1 && $_POST['email']!="") {
             if($value!==""){
                 $selectedCat++;
                 $dataToInsert[]=['category'=>$key, 'contestant'=>$value];
-                //print_r($dataToInsert); die;
             }
         }
     }
@@ -24,44 +21,54 @@ if(isset($_POST['email']) && $_POST['noOfVotes']>1 && $_POST['email']!="") {
     }
     // Convert amount to kobo (100 kobo = 1 naira)
     $amount_kobo = ($_POST['noOfVotes']*50) * 100;
-    //print_r($_POST); die;
-
-    // Prepare data for the Paystack API request
-    $fields = [
-        'email' => $_POST['email'], 
-        'amount' => $amount_kobo,
-        //new
-        'currency' => "NGN",
-        "initiate_type"=>"inline",
-        //new end
-        //'reference'=>$dataToInsert[0]['contestant'].'x'.date('dhis'),
-        //real
-        // 'reference'=>$_POST['chosen_contestant'].'x'.date('dhis'),
-        'transaction_ref'=>$_POST['chosen_contestant'].'x'.date('dhis'),
-        'callback_url' => $myServer."/votes/process/verifySquad.php",
-        // 'metadata' => ["cancel_action" => $myServer."/votes/process/paymentCancelled.php"]
-    ];
-
-    // $fields_string = http_build_query($fields);
-    $fields_string = json_encode($fields);
-    // print_r($fields_string); die();
-    // Set up the Paystack API request
-    // $url = "https://api.paystack.co/transaction/initialize";
-    $url = "https://sandbox-api-d.squadco.com/transaction/initiate";
-    $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL, $url);
-    curl_setopt($ch,CURLOPT_POST, true);
-    curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "Authorization: Bearer sandbox_sk_ebecd1ec7e45995b1bf0e0c5450f24c823d9d8fb74ce",
-        "Cache-Control: no-cache",
-    ));
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     
-    // Execute the Paystack API request
-    $result = curl_exec($ch);
-    echo $result; die();
-    header('location: '.json_decode($result, true)['data']['authorization_url']);
+
+
+
+    // API endpoint
+    $api_url = "https://sandbox-api-d.squadco.com/transaction/initiate";
+    
+    $data = array(
+        "amount" => $amount_kobo,
+        "email" => $_POST['email'],
+        "currency" => "NGN",
+        "initiate_type" => "inline",
+        "transaction_ref" => $_POST['chosen_contestant'].'x'.date('dhis'),
+        "callback_url" => "http://localhost/talent-hunt/votes/process/verifySquad.php"
+        // "callback_url" => "http://squadco.com"
+    );
+
+    // Convert the array to JSON format
+    $payload = json_encode($data);
+
+    // Initialize cURL session
+    $curl = curl_init($api_url);
+
+    // Set the required options for the POST request
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Return the response
+    curl_setopt($curl, CURLOPT_POST, true);           // Use POST method
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $payload); // Pass the payload
+
+    // Set headers
+    $headers = [
+        "Content-Type: application/json",             // Set content type to JSON
+        "Authorization: Bearer sandbox_sk_ebecd1ec7e45995b1bf0e0c5450f24c823d9d8fb74ce"     // Authorization header if required
+    ];
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+    // Execute the API call
+    $response = curl_exec($curl);
+
+    // Check for errors
+    if (curl_errno($curl)) {
+        echo 'Error:' . curl_error($curl);
+    } else {
+        // echo $response; die();
+        header('location: '.json_decode($response, true)['data']['checkout_url']);
+    }
+
+    // Close cURL session
+    curl_close($curl);
     
 } else {
    $_SESSION['msg']="Please provide Number of Votes and Email";

@@ -7,29 +7,30 @@ if (!isset($_GET['reference'])) {
     exit();
 }
 
-$curl = curl_init();
 
-curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://sandbox-api-d.squadco.com/transaction/verify/" . $_GET['reference'],
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => "",
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 30,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => "GET",
-    CURLOPT_HTTPHEADER => array(
-        "Authorization: Bearer sandbox_sk_ebecd1ec7e45995b1bf0e0c5450f24c823d9d8fb74ce",
-        "Cache-Control: no-cache",
-    ),
-));
+// API endpoint
+$api_url ="https://sandbox-api-d.squadco.com/transaction/verify/".$_GET['reference'];
+    
+// Initialize cURL session
+$curl = curl_init($api_url);
 
+// Set the required options for the GET request
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Return the response
+curl_setopt($curl, CURLOPT_HTTPGET, true);        // Use GET method
+
+// Set headers
+$headers = [
+    "Content-Type: application/json",             // Set content type to JSON
+    "Authorization: Bearer sandbox_sk_ebecd1ec7e45995b1bf0e0c5450f24c823d9d8fb74ce"     // Authorization header if required
+];
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+// Execute the API call
 $response = curl_exec($curl);
-$err = curl_error($curl);
 
-curl_close($curl);
 
-if ($err) {
-    echo "cURL Error #:" . $err;
+if (curl_errno($curl)) {
+    echo 'Error:' . curl_error($curl);
 } else {
     // echo $response; die();
     $resp = json_decode($response, true);
@@ -81,5 +82,8 @@ if ($err) {
     } else {
         echo "Payment Failed!";
     }
+    
+// Close cURL session
+curl_close($curl);
 }
 ?>

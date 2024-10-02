@@ -201,8 +201,8 @@ include "../includes/contact-details.php";
                                     // Submit the form after a short delay
                                     setTimeout(() => {
                                         // console.log($('#chosen_contestant').val());
-                                        // $('#categoryForm').submit();
-                                        SquadPay($('#chosen_contestant').val());
+                                        $('#categoryForm').submit();
+                                        // SquadPay($('#chosen_contestant').val());
                                     }, 1000);
                                 }
                             });
@@ -228,8 +228,8 @@ include "../includes/contact-details.php";
                                 onLoad: () => console.log("Widget loaded successfully"),
                                 onSuccess: () => console.log("Success"),
                                 //    key: "sk_c0bb9b7dcc0762ce3109c51ddd302237b06567d6",
-                                //    key: "pk_c0bb9b7dcc0762ce4f7dc472c02e5120d87401b8",
-                                key: "sandbox_pk_ebecd1ec7e45995b1bf093c3517f49a63cc7d1ee13d2",
+                                   key: "pk_c0bb9b7dcc0762ce4f7dc472c02e5120d87401b8",
+                                // key: "sandbox_pk_ebecd1ec7e45995b1bf093c3517f49a63cc7d1ee13d2",
                                 //Change key (test_pk_sample-public-key-1) to the key on your Squad Dashboard
                                 email: document.getElementById("email-address").value,
                                 amount: (document.getElementById("noOfVotes").value*50) * 100,
