@@ -6,33 +6,47 @@
     if(isset($_POST['email']) &&  ($_POST['amount']) && is_numeric($_POST['amount'])) {
         // Convert amount to kobo (100 kobo = 1 naira)
         $amount_kobo = $_POST['amount'] * 100;
-
-    // Prepare data for the Paystack API request
-    $fields = [
-        'email' => $_POST['email'], 
-        'amount' => $amount_kobo,
-        'callback_url' => "http://localhost:60/localserver/gm-talent/dashboard/pages/forms/process/verifyPaystack.php",
-        'metadata' => ["cancel_action" => "http://localhost:60/localserver/gm-talent/dashboard/pages/forms/process/paymentCancelled.php"]
-    ];
-
-    $fields_string = http_build_query($fields);
-
-    // Set up the Paystack API request
-    $url = "https://api.paystack.co/transaction/initialize";
-    $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL, $url);
-    curl_setopt($ch,CURLOPT_POST, true);
-    curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "Authorization: Bearer sk_test_a4cdbb8de5b8b01524c387489e4501edd9d60fb6", 
-        "Cache-Control: no-cache",
-    ));
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+   // API endpoint
+    $api_url = "https://api-d.squadco.com/transaction/initiate";
     
-     // Execute the Paystack API request
-    $result = curl_exec($ch);
-    // print_r($result); die;
-    header('location: '.json_decode($result, true)['data']['authorization_url']);
+    $data = array(
+        "amount" => $amount_kobo,
+        "email" => $_POST['email'],
+        "currency" => "NGN",
+        "initiate_type" => "inline",
+        "transaction_ref" => rand(0,100).date('dhYmis'),
+        "callback_url" => "https://gospelmusically.com/dashboard/pages/forms/process/verifySquad.php"
+        // "callback_url" => "http://squadco.com"
+    );
+
+    // Convert the array to JSON format
+    $payload = json_encode($data);
+
+    // Initialize cURL session
+    $curl = curl_init($api_url);
+
+    // Set the required options for the POST request
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Return the response
+    curl_setopt($curl, CURLOPT_POST, true);           // Use POST method
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $payload); // Pass the payload
+
+    // Set headers
+    $headers = [
+        "Content-Type: application/json",             // Set content type to JSON
+        "Authorization: Bearer sk_c0bb9b7dcc0762ce3109c51ddd302237b06567d6"     // Authorization header if required
+    ];
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+    // Execute the API call
+    $response = curl_exec($curl);
+
+    // Check for errors
+    if (curl_errno($curl)) {
+        echo 'Error:' . curl_error($curl);
+    } else {
+        // print_r($result); die;
+        header('location: '.json_decode($response, true)['data']['checkout_url']);
+    }
     
 } else {
    
