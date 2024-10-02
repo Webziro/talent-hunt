@@ -2,7 +2,7 @@
 
 session_start();
 include "../../includes/conn.php";
-$myServer="http://localhost/talent-hunt";
+$myServer="https://gospelmusically.com";
 if(isset($_POST['email']) && $_POST['noOfVotes']>1 && $_POST['email']!="") {    
     $selectedCat=0;
     $dataToInsert=[];
@@ -26,7 +26,7 @@ if(isset($_POST['email']) && $_POST['noOfVotes']>1 && $_POST['email']!="") {
 
 
     // API endpoint
-    $api_url = "https://sandbox-api-d.squadco.com/transaction/initiate";
+    $api_url = "https://api-d.squadco.com/transaction/initiate";
     
     $data = array(
         "amount" => $amount_kobo,
@@ -34,7 +34,7 @@ if(isset($_POST['email']) && $_POST['noOfVotes']>1 && $_POST['email']!="") {
         "currency" => "NGN",
         "initiate_type" => "inline",
         "transaction_ref" => $_POST['chosen_contestant'].'x'.date('dhis'),
-        "callback_url" => "http://localhost/talent-hunt/votes/process/verifySquad.php"
+        "callback_url" => "https://gospelmusically.com/votes/process/verifySquad.php"
         // "callback_url" => "http://squadco.com"
     );
 
@@ -52,7 +52,7 @@ if(isset($_POST['email']) && $_POST['noOfVotes']>1 && $_POST['email']!="") {
     // Set headers
     $headers = [
         "Content-Type: application/json",             // Set content type to JSON
-        "Authorization: Bearer sandbox_sk_ebecd1ec7e45995b1bf0e0c5450f24c823d9d8fb74ce"     // Authorization header if required
+        "Authorization: Bearer sk_c0bb9b7dcc0762ce3109c51ddd302237b06567d6"     // Authorization header if required
     ];
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 

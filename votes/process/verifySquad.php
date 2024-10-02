@@ -9,7 +9,7 @@ if (!isset($_GET['reference'])) {
 
 
 // API endpoint
-$api_url ="https://sandbox-api-d.squadco.com/transaction/verify/".$_GET['reference'];
+$api_url ="https://api-d.squadco.com/transaction/verify/".$_GET['reference'];
     
 // Initialize cURL session
 $curl = curl_init($api_url);
@@ -21,7 +21,7 @@ curl_setopt($curl, CURLOPT_HTTPGET, true);        // Use GET method
 // Set headers
 $headers = [
     "Content-Type: application/json",             // Set content type to JSON
-    "Authorization: Bearer sandbox_sk_ebecd1ec7e45995b1bf0e0c5450f24c823d9d8fb74ce"     // Authorization header if required
+    "Authorization: Bearer sk_c0bb9b7dcc0762ce3109c51ddd302237b06567d6"     // Authorization header if required
 ];
 curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
