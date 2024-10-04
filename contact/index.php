@@ -65,8 +65,10 @@
                                             <li class=nav-item>
                                                 <a class=nav-link href=../about/index.php>About</a></a>
                                             </li>
+
+
                                             <li class=nav-item>
-                                                <a class=nav-link href=#>Categories</a></a>
+                                                <a class=nav-link href=../index.php>Contact</a></a>
                                             </li>
 
                                             <li class="nav-item dropdown">
@@ -78,9 +80,6 @@
                                                     <a class=dropdown-item href=../auth/signup.php>Sign Up</a>
                                                     <a class=dropdown-item href=../auth/signin.php>Login</a>
                                                 </div>
-                                            </li>
-                                            <li class=nav-item>
-                                                <a class=nav-link href=../index.php>Contact</a></a>
                                             </li>
                                         </ul>
 

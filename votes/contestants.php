@@ -14,8 +14,6 @@ include "../includes/contact-details.php";
         <title>
             <? echo $header;?>
         </title>
-        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="shortcut icon" href=../images/gmally-logo.jpeg type=image/x-icon>
@@ -44,8 +42,8 @@ include "../includes/contact-details.php";
 
                             <!-- HTML form -->
                             <form action="process/payment.php" method="POST" id="categoryForm">
-                            // Fetching categories and contestants
-                            <?php
+                                // Fetching categories and contestants
+                                <?php
                                     $sql = "SELECT c.id AS category_id, u.id AS contestant_id, c.name AS category_name, c.description AS category_description, u.Uname AS contestant_name
                                             FROM categories c
                                             INNER JOIN contestants cn ON c.id = cn.category_id 
@@ -83,13 +81,16 @@ include "../includes/contact-details.php";
                                             echo '<div class="category">';
                                             echo '<h3 style="color:#b59410;">' . $category_data['name'] . ' Category</h3>';
                                             echo '<p style="color:#fff">' . $category_data['description'] . '</p>'; ?>
-                                            <select class="custom-select" name="category_<?php echo $category_id; ?>" id="category_contestants_<?php echo $category_id; ?>" onChange="updateSelectedContestant(this)">
-                                                <option value="">--Select an option--</option>
-                                                <?php foreach ($category_data['contestants'] as $contestant_id => $contestant_name): ?>
-                                                    <option value="<?php echo $contestant_id; ?>"><?php echo $contestant_name; ?></option>
-                                                <?php endforeach; ?>
-                                            </select> 
-                                            <?php
+                                <select class="custom-select" name="category_<?php echo $category_id; ?>"
+                                    id="category_contestants_<?php echo $category_id; ?>"
+                                    onChange="updateSelectedContestant(this)">
+                                    <option value="">--Select an option--</option>
+                                    <?php foreach ($category_data['contestants'] as $contestant_id => $contestant_name): ?>
+                                    <option value="<?php echo $contestant_id; ?>"><?php echo $contestant_name; ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <?php
                                             echo '</div>';
                                         }
                                     } else {
@@ -127,40 +128,41 @@ include "../includes/contact-details.php";
                             <!-- Bootstrap JS -->
                             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js">
                             </script>
- <script src="https://checkout.squadco.com/widget/squad.min.js"></script>
- <!-- <script src="https://checkout.squadco.com/v1/squad.min.js"></script> -->
+                            <script src="https://checkout.squadco.com/widget/squad.min.js"></script>
+                            <!-- <script src="https://checkout.squadco.com/v1/squad.min.js"></script> -->
 
                             <script>
-                                function generateUniqueNumbers(count, min, max) {
-                                    const uniqueNumbers = new Set();
+                            function generateUniqueNumbers(count, min, max) {
+                                const uniqueNumbers = new Set();
 
-                                    while (uniqueNumbers.size < count) {
-                                        const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-                                        uniqueNumbers.add(randomNum);
-                                    }
-
-                                    return Array.from(uniqueNumbers).join(''); // Join the numbers without commas
+                                while (uniqueNumbers.size < count) {
+                                    const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                                    uniqueNumbers.add(randomNum);
                                 }
 
-                                function updateSelectedContestant(selectElement) {
-                                    // Get the selected option value
-                                    var selectedValue = selectElement.value; // The value of the selected option
-                                    var selectedText = selectElement.options[selectElement.selectedIndex].text; // The text of the selected option
+                                return Array.from(uniqueNumbers).join(''); // Join the numbers without commas
+                            }
 
-                                    // Update the hidden input field
-                                    $('#chosen_contestant').val(selectedValue);
-                                    
-                                    // Optionally, you can log the selected value and text to the console
-                                    console.log("Selected Contestant ID: " + selectedValue);
-                                    console.log("Selected Contestant Name: " + selectedText);
+                            function updateSelectedContestant(selectElement) {
+                                // Get the selected option value
+                                var selectedValue = selectElement.value; // The value of the selected option
+                                var selectedText = selectElement.options[selectElement.selectedIndex]
+                                .text; // The text of the selected option
 
-                                    // Show the submit button container if a contestant is selected
-                                    if (selectedValue !== "") {
-                                        $('#submitButtonContainer').show();
-                                    } else {
-                                        $('#submitButtonContainer').hide(); // Hide if no selection
-                                    }
+                                // Update the hidden input field
+                                $('#chosen_contestant').val(selectedValue);
+
+                                // Optionally, you can log the selected value and text to the console
+                                console.log("Selected Contestant ID: " + selectedValue);
+                                console.log("Selected Contestant Name: " + selectedText);
+
+                                // Show the submit button container if a contestant is selected
+                                if (selectedValue !== "") {
+                                    $('#submitButtonContainer').show();
+                                } else {
+                                    $('#submitButtonContainer').hide(); // Hide if no selection
                                 }
+                            }
                             // Keep track of the previously selected element
                             let previouslySelectedElement = null;
 
@@ -197,7 +199,7 @@ include "../includes/contact-details.php";
                                 // Confirm the action with the user
                                 var confirmation = confirm('Are you sure you want to proceed to payment?');
                                 if (confirmation) {
-                                    
+
                                     // Submit the form after a short delay
                                     setTimeout(() => {
                                         // console.log($('#chosen_contestant').val());
@@ -224,17 +226,17 @@ include "../includes/contact-details.php";
 
                             function SquadPay(contestant) {
                                 const squadInstance = new squad({
-                                onClose: () => console.log("Widget closed"),
-                                onLoad: () => console.log("Widget loaded successfully"),
-                                onSuccess: () => console.log("Success"),
-                                   key: "pk_c0bb9b7dcc0762ce4f7dc472c02e5120d87401b8",
-                                //Change key (test_pk_sample-public-key-1) to the key on your Squad Dashboard
-                                email: document.getElementById("email-address").value,
-                                amount: (document.getElementById("noOfVotes").value*50) * 100,
-                                transaction_ref: contestant+'x'+generateUniqueNumbers(10,0,99),
-                                //Enter amount in Naira or Dollar (Base value Kobo/cent already multiplied by 100)
-                                currency_code: "NGN",
-                                callback_url: "http://localhost/talent-hunt/votes/process/verifySquad.php"
+                                    onClose: () => console.log("Widget closed"),
+                                    onLoad: () => console.log("Widget loaded successfully"),
+                                    onSuccess: () => console.log("Success"),
+                                    key: "pk_c0bb9b7dcc0762ce4f7dc472c02e5120d87401b8",
+                                    //Change key (test_pk_sample-public-key-1) to the key on your Squad Dashboard
+                                    email: document.getElementById("email-address").value,
+                                    amount: (document.getElementById("noOfVotes").value * 50) * 100,
+                                    transaction_ref: contestant + 'x' + generateUniqueNumbers(10, 0, 99),
+                                    //Enter amount in Naira or Dollar (Base value Kobo/cent already multiplied by 100)
+                                    currency_code: "NGN",
+                                    callback_url: "http://localhost/talent-hunt/votes/process/verifySquad.php"
                                 });
                                 squadInstance.setup();
                                 squadInstance.open();

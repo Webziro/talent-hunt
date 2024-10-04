@@ -6,9 +6,6 @@
           <li class=nav-item>
               <a class=nav-link href=about/index.php>About</a></a>
           </li>
-          <li class=nav-item>
-              <a class=nav-link href=#>Categories</a></a>
-          </li>
 
           <li class=nav-item>
               <a class=nav-link href="contact/index.php">Contact</a></a>
@@ -18,7 +15,7 @@
           <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href=# role=button data-toggle=dropdown aria-haspopup=true
                   aria-expanded=false>
-                  Sign UP/Login
+                  Signup/Login
               </a>
               <div class=dropdown-menu>
 
@@ -26,10 +23,6 @@
                   <a class=dropdown-item href=auth/signin.php>Login</a>
               </div>
           </li>
-
-
-          <!-- <a class=dropdown-item href=auth/signup.php>Sign up</a>
-          <a class=dropdown-item href=auth/signin.php>Login</a> -->
 
       </ul>
   </div>
