@@ -1,7 +1,7 @@
 <?php
 // Database connection credentials
-$hostname = 'localhost'; // specify host domain or IP, i.e. 'localhost' or '127.0.0.1' or server IP 'xxx.xxxx.xxx.xxx'
-$database = 'gmally-talent'; // specify database name
-$db_user = 'root'; // specify username
-$db_pass = ''; // specify password
+$hostname = 'localhost'; 
+$database = 'gmally-talent'; 
+$db_user = 'root'; 
+$db_pass = ''; 
 $conn = mysqli_connect("$hostname" , "$db_user" , "$db_pass", "$database");
