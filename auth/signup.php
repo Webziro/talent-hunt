@@ -59,11 +59,11 @@
 
 
             <?php
-                                if(isset($_SESSION['msg'])){
-                                    echo $_SESSION['msg'];
-                                    unset($_SESSION['msg']);
-                                }
-                            ?>
+                if(isset($_SESSION['msg'])){
+                    echo $_SESSION['msg'];
+                    unset($_SESSION['msg']);
+                }
+            ?>
 
             <div class=col-md-5>
                 <div class=contact-info>
